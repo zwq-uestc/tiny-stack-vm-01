@@ -97,8 +97,10 @@ function run(p: Uint8Array, inp: Uint8Array): [Uint8Array, number] {
           if (b === 0) return end(4);
           r = (a / b) | 0;
         } else if (op === 20) {
+          // MOD: a % -1 is 0 (or -0) in JS for every a, so no special case
+          // is needed for INT_MIN % -1; |0 normalises -0 to 0.
           if (b === 0) return end(4);
-          r = b === -1 ? 0 : (a % b) | 0;
+          r = (a % b) | 0;
         } else if (op === 21) {
           if (b === 0) return end(4);
           r = Math.floor((a >>> 0) / (b >>> 0)) | 0;
